@@ -1,13 +1,3 @@
-#List all the actors that share the last name. Show them in order
-#Find actors that don't work in any film
-#Find customers that rented only one film
-#Find customers that rented more than one film
-#List the actors that acted in 'BETRAYED REAR' or in 'CATCH AMISTAD'
-#List the actors that acted in 'BETRAYED REAR' but not in 'CATCH AMISTAD'
-#List the actors that acted in both 'BETRAYED REAR' and 'CATCH AMISTAD'
-#List all the actors that didn't work in 'BETRAYED REAR' or 'CATCH AMISTAD'
-
-
 use sakila;
 /* 1 */
 select last_name,first_name,actor_id 
