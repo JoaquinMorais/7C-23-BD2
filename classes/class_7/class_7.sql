@@ -34,14 +34,8 @@ AND NOT EXISTS(
 );
 
 /*  3  */
-Generate a report with list of customers showing the lowest payments done by each of them. 
-Show customer information, the address and the lowest amount, 
-provide both solution using ALL and/or ANY and MIN.
-
-
-
 SELECT * from (
-  SELECT c.customer_id as id,c.first_name, c.last_name, p.amount AS lowest_payment
+  SELECT c.customer_id as id,c.first_name as firstName, c.last_name as lastName,a.address as address, p.amount AS lowest_payment
   FROM customer c
   INNER JOIN payment p on c.customer_id = p.customer_id
   INNER JOIN address a on c.address_id = a.address_id
@@ -51,3 +45,17 @@ SELECT * from (
 ) as queryPapa
 GROUP BY id,lowest_payment;
 
+/*  4  */
+SELECT id,firstName,lastName,address,min(amount) AS lowest_payment , max(amount) AS highest_payment from (
+  SELECT c.customer_id as id,c.first_name as firstName, c.last_name as lastName,a.address as address,p.amount as amount
+  FROM customer c
+  INNER JOIN payment p on c.customer_id = p.customer_id
+  INNER JOIN address a on c.address_id = a.address_id
+  WHERE p.amount <= ALL(
+    SELECT amount from payment WHERE customer_id=c.customer_id
+  )
+  OR p.amount >= ALL(
+    SELECT amount from payment WHERE customer_id=c.customer_id
+  )
+) as queryPapa
+GROUP BY id;
